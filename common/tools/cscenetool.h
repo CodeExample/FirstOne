@@ -12,7 +12,7 @@ class CSceneTool : public CAbstractTool
   Q_OBJECT
 
 public:
-  CSceneTool(QWidget * =0, bool post_event_tool=true);
+  CSceneTool(QWidget * =nullptr, bool post_event_tool=true);
 
   void setGraphicsView(QGraphicsView*) override;
 

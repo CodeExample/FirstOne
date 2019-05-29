@@ -26,7 +26,6 @@ public:
     return _instance;
   }
 
-
   void init(QGraphicsScene *, QGraphicsView *);
 
 private:

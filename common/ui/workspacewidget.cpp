@@ -48,11 +48,6 @@ WorkspaceWidget::WorkspaceWidget(QWidget *parent) :
           this, SLOT(_metric_changed(vxMetrics)));
 
   connect(hprj, SIGNAL(projectReaded(CDocument)), this, SLOT(_project_readed(CDocument)));
-/*
-  connect(vxEnvironment::instance(), SIGNAL(activeProjectChanged()),
-          this, SLOT(_active_project_changed()));
-*/
-//  ui->graphicsView->installEventFilter(this);
 }
 
 
@@ -111,12 +106,6 @@ void WorkspaceWidget::_metric_changed(vxMetrics metric)
 
   _horz_ruler->update();
   _vert_ruler->update();
-
-  //if (project->document())
-  //{
-  //  ui->vertScrollBar->setSingleStep(project->document().boundingRect().height()/100);
-  //  ui->horzScrollBar->setSingleStep(project->document().boundingRect().width()/100);
-  //}
 }
 
 
@@ -172,7 +161,7 @@ void WorkspaceWidget::showRulers()
 
 QImage WorkspaceWidget::getSceneScreen() const
 {
-/*  QRectF r(QPointF(0,0), ui->graphicsView->viewport()->size());
+  QRectF r(QPointF(0,0), ui->graphicsView->viewport()->size());
 
   QImage scene_image(r.size().toSize(), QImage::Format_ARGB32);
 
@@ -185,8 +174,7 @@ QImage WorkspaceWidget::getSceneScreen() const
 
   vxEnvironment::instance()->setProperty(ATTR_HIDE_SELECTION, 0);
 
-  return scene_image;*/
-  return QImage();
+  return scene_image;
 }
 
 

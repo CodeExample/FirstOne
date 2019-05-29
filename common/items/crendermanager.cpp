@@ -34,7 +34,6 @@ int CRenderManager::queuePainterCount() const
 
 void CRenderManager::append(const COGLRenderThreadTask &render_task)
 {
-qDebug() << "append" << render_task.painter_data->tmpl_id;
   QMutexLocker l(&mutex);
   if (!render_thread)
   {
@@ -103,7 +102,7 @@ void CRenderManager::_painter_ready(int tmpl_id, const PainterThreadTask &task)
 
 void CRenderManager::_knife_edges_created(int , StrokesTemplateData * )
 {
-//  emit knifeEdgesCreated(tmpl_id, tmpl_data);
+  emit knifeEdgesCreated(tmpl_id, tmpl_data);
 }
 
 

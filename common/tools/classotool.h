@@ -13,7 +13,7 @@ class CLassoTool : public CSceneTool
   Q_OBJECT
 
 public:
-  CLassoTool(QWidget* =0);
+  CLassoTool(QWidget* =nullptr);
 
   int toolType() const override
   {

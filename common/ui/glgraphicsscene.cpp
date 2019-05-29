@@ -8,7 +8,6 @@
 #include <QImageReader>
 
 
-
 using namespace sm;
 
 
@@ -45,7 +44,6 @@ void GLGraphicsScene::dragEnterEvent(QGraphicsSceneDragDropEvent *event)
 
 void GLGraphicsScene::dropEvent(QGraphicsSceneDragDropEvent *event)
 {
-
   if (event->mimeData()->hasImage())
   {
     if (_drop_image(event->mimeData()))

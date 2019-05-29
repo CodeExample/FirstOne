@@ -27,7 +27,7 @@
 #include <QFileDialog>
 #include <QDragEnterEvent>
 
-#define BACKGROUND_COLOR   0xffaaaaaa//0xff747781 //0xff4e505d
+#define BACKGROUND_COLOR   0xff747781
 
 using namespace sm;
 
@@ -80,15 +80,6 @@ void CProjectHandler::init(QGraphicsScene * scene, QGraphicsView * view)
 
   _viewport = static_cast<QOpenGLWidget*>(view->viewport());
   _viewport->installEventFilter(this);
-/*
-  if (qApp->arguments().count() > 0)
-  {
-    if (QFileInfo(qApp->arguments().at(1)).exists())
-    {
-      loadImage(qApp->arguments().at(1));
-    }
-  }
-*/
 }
 
 
@@ -119,8 +110,8 @@ public:
 
 void CProjectHandler::_order_z_items(const CLayer &)
 {
-  //OrderItems ov(&_items_map);
-  //root.iterate(&ov);
+  OrderItems ov(&_items_map);
+  root.iterate(&ov);
 }
 
 
@@ -164,8 +155,8 @@ void CProjectHandler::startRenderProcess(const CShape &shape)
 
 void CProjectHandler::updateStrokesTemplate(const CStrokesTemplate &)
 {
-/*  ObjId id = tmpl.id();
-  CShapeItem * item = _items_map.contains(id) ? static_cast<CShapeItem*>(_items_map.value(id)) : 0;
+  ObjId id = tmpl.id();
+  CShapeItem * item = _items_map.contains(id) ? static_cast<CShapeItem*>(_items_map.value(id)) : nullptr;
 
   if (!item)
     return;
@@ -173,7 +164,7 @@ void CProjectHandler::updateStrokesTemplate(const CStrokesTemplate &)
   if (!tmpl.isChanged())
     return;
 
-  item->startStrokesRender(tmpl);*/
+  item->startStrokesRender(tmpl);
 }
 
 
@@ -185,7 +176,7 @@ void CProjectHandler::repaintScene()
 
 void CProjectHandler::updateItems()
 {
-/*  if (_edges_in_process.count() > 0)
+  if (_edges_in_process.count() > 0)
     _need_update_scene_after_edges_finished = true;
 
   if (_need_update_scene_after_edges_finished)
@@ -194,7 +185,7 @@ void CProjectHandler::updateItems()
   _check_document_item(_document);
   _check_object_item(_document.root());
   _update_strokes_layer(_document.root());
-  _order_z_items(_document.root());*/
+  _order_z_items(_document.root());
 }
 
 
@@ -216,16 +207,16 @@ public:
     if (edges.contains(edge))
         return false;
 
-    //QRectF e_r = edge.transform().mapRect(edge.boundingRect());
+    QRectF e_r = edge.transform().mapRect(edge.boundingRect());
 
     for(const CStrokesTemplate &knife : knife_tmpls)
     {
       if (edge == knife)
         continue;
 
-      //QRectF k_r = knife.transform().mapRect(knife.boundingRect());
+      QRectF k_r = knife.transform().mapRect(knife.boundingRect());
 
-      //if (e_r.intersects(k_r))
+      if (e_r.intersects(k_r))
       {
         edges << edge;
         break;
@@ -255,10 +246,10 @@ public:
     if (!knife.data()->is_knife)
       return false;
 
-    //QRectF e_r = edge.transform().mapRect(edge.boundingRect());
-    //QRectF k_r = knife.transform().mapRect(knife.boundingRect());
+    QRectF e_r = edge.transform().mapRect(edge.boundingRect());
+    QRectF k_r = knife.transform().mapRect(knife.boundingRect());
 
-    //if (e_r.intersects(k_r))
+    if (e_r.intersects(k_r))
       knives << knife;
 
     return false;
@@ -514,7 +505,6 @@ bool CProjectHandler::eventFilter(QObject * object, QEvent * event)
   // Drop actions
   //
   //
-  /*
   case QEvent::DragEnter:
   {
     if (!_accept_drops)
@@ -564,7 +554,7 @@ bool CProjectHandler::eventFilter(QObject * object, QEvent * event)
       }
     break;
   }
-*/
+
   default:;
   }
 
@@ -614,11 +604,6 @@ bool CProjectHandler::loadImage(const QString &in_file_name)
   emit documentChanged(_document);
   emit imageLoaded(image);
 
-  /*if (_image_item)
-  {
-    delete _image_item;
-    _image_item = nullptr;
-  }*/
   _on_action_show_image(true);
 
   QTimer::singleShot(10, this, SIGNAL(requestShowWorkspace()));
@@ -636,12 +621,7 @@ bool CProjectHandler::loadImage(const QImage &in_image)
 
   emit documentChanged(_document);
   emit imageLoaded(in_image);
-/*
-  if (_image_item)
-  {
-    delete _image_item;
-    _image_item = nullptr;
-  }*/
+
   _on_action_show_image(true);
 
   QTimer::singleShot(10, this, SIGNAL(requestShowWorkspace()));
@@ -662,7 +642,7 @@ void CProjectHandler::_selection_changed()
       if (transform_ctrl->hasChanges())
       {
         transform_ctrl->finish();
-        //applyTransform(transform_ctrl->selection());
+        applyTransform(transform_ctrl->selection());
       }
       delete transform_ctrl;
     }
@@ -751,7 +731,7 @@ void CProjectHandler::setAction(int key, QAction *action, QActionGroup * group)
     break;
 
   case ActionApplyTransform:
-    //connect(action, SIGNAL(triggered(bool)), this, SLOT(_on_apply_transform_triggered(bool)));
+    connect(action, SIGNAL(triggered(bool)), this, SLOT(_on_apply_transform_triggered(bool)));
     break;
 
   case ActionGroup:
@@ -774,7 +754,7 @@ QAction * CProjectHandler::action(int key)
 
 void CProjectHandler::_on_action_show_image(bool b)
 {
-  /*if (!_image_item)
+  if (!_image_item)
   {
     _image_item = new QGraphicsPixmapItem(QPixmap::fromImage(_source_image));
     _image_item->setZValue(Z_VALUE_PIXMAP_ITEM);
@@ -784,7 +764,7 @@ void CProjectHandler::_on_action_show_image(bool b)
     _graphics_view->fitInView(_image_item, Qt::KeepAspectRatio);
   }
 
-  _image_item->setVisible(b);*/
+  _image_item->setVisible(b);
 
   _is_show_source_image = b;
 
@@ -929,24 +909,9 @@ void CProjectHandler::execute(QUndoCommand * comm)
 
 void CProjectHandler::assignItemToObject(QGraphicsItem *, const CGraphics &)
 {
-//  _items_map.insert(object.id(), item);
+  _items_map.insert(object.id(), item);
 }
 
-
-
-/*
-void CProjectHandler::_element_removed(const CShape &shape)
-{
-  if (_items_map.contains(shape.id()))
-  {
-    QGraphicsItem * shape_item = static_cast<CShapeItem*>(_items_map.value(shape.id()));
-    _items_map.remove(shape.id());
-    shape_item->hide();
-    _trash_items << shape_item;
-    _clear_items_trash();
-  }
-}
-*/
 
 void CProjectHandler::registerThread(QThread * thread)
 {
@@ -1015,6 +980,7 @@ void CProjectHandler::_history_index_changed(int)
 
   emit historyChanged();
 }
+
 
 bool CProjectHandler::getSelection(QList<CGraphics> &selection)
 {
@@ -1115,7 +1081,7 @@ void CProjectHandler::_validate_actions()
 
 void CProjectHandler::_on_transform_triggered(bool)
 {
-/*  if (hasTransformControl())
+  if (hasTransformControl())
     return;
 
   setTool(ToolSelector);
@@ -1127,11 +1093,10 @@ void CProjectHandler::_on_transform_triggered(bool)
   connect(tc, SIGNAL(transformFinished(QString, QList<QGraphicsItem*>)),
           this, SLOT(_item_transform_finished(QString, QList<QGraphicsItem*>)));
 
-  _scene->addItem(tc);*/
+  _scene->addItem(tc);
 }
 
 
-/*
 void CProjectHandler::applyTransform(const QList<QGraphicsItem*> &items)
 {
   for(QGraphicsItem * item : items)
@@ -1144,7 +1109,6 @@ void CProjectHandler::applyTransform(const QList<QGraphicsItem*> &items)
     }
   }
 }
-*/
 
 
 bool CProjectHandler::cancelTransform()
@@ -1159,8 +1123,8 @@ bool CProjectHandler::cancelTransform()
 
 void CProjectHandler::_on_apply_transform_triggered(bool)
 {
-  //applyTransform();
-  //hprj->updateControls();
+  applyTransform();
+  hprj->updateControls();
 }
 
 
@@ -1206,36 +1170,6 @@ bool CProjectHandler::clearTransformControl()
 
   return true;
 }
-/*
-
-void CProjectHandler::_item_transform_started(const QList<QGraphicsItem*> &selection)
-{
-  QList<CGraphics> objects;
-  for(QGraphicsItem * item : selection)
-  {
-    if (item->type() == ShapeItem)
-    {
-      CShapeItem * shape_item = static_cast<CShapeItem*>(item);
-      objects << shape_item->shapeObject();
-    } else
-    if (item->type() == GroupItem)
-    {
-      CGroupItem * group_item = static_cast<CGroupItem*>(item);
-      objects << group_item->groupObject();
-    }
-
-  }
-  _transform_started(objects);
-}
-
-
-void CProjectHandler::_item_transform_finished(const QString &caption, const QList<QGraphicsItem*> &items)
-{
-  //applyTransform(items);
-  _transform_finished(caption);
-}
-*/
-
 
 
 void CProjectHandler::notifySceneMouseMove(const QPointF &scene_pos)
@@ -1327,7 +1261,6 @@ void CProjectHandler::loadLayout(QMainWindow *main_window)
 {
   loadLayout(main_window, layoutFileName());
 }
-
 
 
 void CProjectHandler::saveLayout(QMainWindow*main_window, const QString& file_name)
@@ -1540,7 +1473,6 @@ bool CProjectHandler::endDragSelection(TxSelectionRec &tx_rec)
 }
 
 
-
 bool CProjectHandler::readProject(const QString &file_name)
 {
   QFile file(file_name);
@@ -1576,7 +1508,7 @@ bool CProjectHandler::readProject(const QString &file_name)
 
   setDocument(document);
 
-/*  CParserSTRX parser(file_name);
+  CParserSTRX parser(file_name);
 
   QList<CGraphics> objects;
 
@@ -1593,7 +1525,7 @@ bool CProjectHandler::readProject(const QString &file_name)
   {
     root.add(object);
     emit objectAdded(object, root);
-  }*/
+  }
 
   emit projectReaded(hprj->document());
 
@@ -1719,7 +1651,6 @@ bool CProjectHandler::doNewProject()
 }
 
 
-
 void CProjectHandler::updateRecentFilesSettings()
 {
   QString current_file_name = hprj->document().fileName();
@@ -1823,7 +1754,6 @@ void CProjectHandler::buildRecentFilesMenu(QMenu * menu)
 
   disconnect(menu, SIGNAL(triggered(QAction*)), this, SLOT(_recent_menu_triggered(QAction*)));
   connect(menu, SIGNAL(triggered(QAction*)), this, SLOT(_recent_menu_triggered(QAction*)));
-
 
   settings.endArray();
 }

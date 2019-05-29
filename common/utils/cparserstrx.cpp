@@ -170,21 +170,8 @@ public:
     {
       return true;
     }
-/*    if (tag == TAG_BIG_PICT)
-    {
-      CImage pict = CImage::createInstance();
-      stack.append(pict);
-      return true;
-    }
-    if (tag == TAG_IMAGE_DATA)
-    {
-      CImage pict = stack.last();
-      _read_path_curve()
-    }
 
-*/
     indent += "  ";
-    qDebug() << QString("%1<%2>").arg(indent).arg(tag);
 
     return true;
   }
@@ -226,7 +213,6 @@ public:
       _document = stack.takeLast();
       return true;
     }
-
 
     return true;
   }

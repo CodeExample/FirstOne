@@ -89,20 +89,6 @@ public:
 
     CGraphics object = tree_item->object();
 
-    /*if (object && object.owner() && object.owner().objectType() == Grid)
-      return;
-
-    switch(object.objectType())
-    {
-    //case Document:
-    case RenderDepth:
-    case RenderOrdinaryDepth:
-    case RenderProfiledDepth:
-      return;
-
-    default:;
-    }*/
-
     if (object.isVisible())
     {
       painter->drawImage(option.rect.topLeft() + QPoint(0,2), _img_visible);
@@ -144,25 +130,6 @@ public:
     if (!tree_item)
       return;
 
-    CGraphics object = tree_item->object();
-
-    //if (object && object.owner() && object.owner().objectType() == Grid)
-    //  return;
-
-    /*bool export_enbl = object.isExportEnabled();
-    switch(object.objectType())
-    {
-    case Layer:
-      break;
-    case BigImage:
-    case Grid:
-      export_enbl &= object.owner() && object.owner().isExportEnabled();
-      break;
-
-    default:;
-      return;
-    }*/
-
     bool export_enbl = true;
 
     if (export_enbl)
@@ -195,13 +162,6 @@ LayersForm::LayersForm(QWidget * parent) :
 {
   ui->setupUi(this);
 
-/*  connect(ui->buttonNewLayer, SIGNAL(clicked()), ui->actionNewLayer, SLOT(trigger()));
-
-  ui->buttonRemove->setEnabled(false);
-
-  ui->buttonCombineToGrid->setVisible(true);
-  ui->buttonBreakAppart->setVisible(true);
-*/
   _item_icon_bmp = QIcon(":/images/bmp.png");
   _item_icon_eps = QIcon(":/images/eps.png");
   _item_icon_hyp = QIcon(":/images/hyp.png");
@@ -279,76 +239,14 @@ LayersForm::~LayersForm()
 
 void LayersForm::on_actionNewLayer_triggered()
 {
-/*  vxDocument document = vxEnvironment::activeDocument();
-
-  vxLayer layer(&document);
-
-  vxCommandAddLayerToProject * add_command = new vxCommandAddLayerToProject(document, layer);
-
-  add_command->setText(tr("add layer"));
-
-  document.execute(add_command);
-
-  _set_current_tree_item(layer);*/
+  // will come later
 }
 
 
 
 void LayersForm::on_buttonAddRender_clicked()
 {
-/*  QList<vxGraphics> selection = getSelectedObjects();
-
-  if (selection.count() != 1)
-    return;
-
-  vxGraphics object = selection.first();
-  if (object.objectType() != Layer)
-    return;
-
-  vxDocument document = vxEnvironment::activeDocument();
-
-  vxLayer layer = object;
-
-  QMenu menu;
-  {
-    QAction * action = menu.addAction("Depth render");
-    action->setIcon(QIcon(QPixmap(":/images/hammer.png")));
-    action->setData(RenderOrdinaryDepth);
-  }
-
-  if (document.imageFormat() == bifGrayscale)
-  {
-    QAction * action = menu.addAction("Profiled render");
-    action->setIcon(QIcon(QPixmap(":/images/hammer.png")));
-    action->setData(RenderProfiledDepth);
-  }
-
-  QAction * selected_action = menu.exec(parentWidget()->mapToGlobal(ui->buttonAddRender->geometry().bottomLeft()));
-
-  if (!selected_action)
-    return;
-
-  int render_type_id = selected_action->data().toInt();
-
-  vxRender render;
-
-  switch(render_type_id)
-  {
-  case RenderOrdinaryDepth:
-    render = vxDepthRender();
-    break;
-
-  case RenderProfiledDepth:
-    render = vxProfiledDepthRender();
-    break;
-  }
-
-  vxCommandAddRender * command = new vxCommandAddRender(document, layer, render);
-  command->setText(tr("add render to layer"));
-
-  document.execute(command);
-
-  _set_current_tree_item(render);*/
+  // will come later
 }
 
 
@@ -356,21 +254,7 @@ void LayersForm::on_buttonAddRender_clicked()
 
 bool LayersForm::_remove_objects()
 {
-/*  vxDocument document = vxEnvironment::activeDocument();
-
-  QList<vxGraphicsObject> objects = document.getSelectedObjects();
-
-  if (objects.count() == 0)
-    return false;
-
-  vxCommandDeleteObjects * delete_command = new vxCommandDeleteObjects(document, objects);
-
-  delete_command->setText(tr("delete object%1").arg(objects.count() == 1 ? "s" : ""));
-
-  document.execute(delete_command);
-
-  vxEnvironment::notifyObjectsRemoved(objects);
-*/
+  // will come later
   return true;
 }
 
@@ -378,180 +262,20 @@ bool LayersForm::_remove_objects()
 
 bool LayersForm::_remove_object(const CGraphics& )
 {
-/*  bool need_notify = false;
-
-  vxDocument document = vxEnvironment::activeDocument();
-
-  switch (object.objectType())
-  {
-  case ImageMask:
-  {
-    vxCommandRemoveMask * remove_mask = new vxCommandRemoveMask(document, object.owner());
-    remove_mask->setText(QString("remove mask"));
-    document.execute(remove_mask);
-
-    _set_current_tree_item(object.owner());
-
-    break;
-  }
-
-  case RenderDepth:
-  case RenderOrdinaryDepth:
-  case RenderProfiledDepth:
-  case RenderConturs:
-  {
-    vxRender render = object;
-    vxLayer layer = render.ownerLayer();
-    if (layer.isPresent())
-    {
-      vxCommandRemoveRender * command = new vxCommandRemoveRender(document, layer, render);
-      command->setText(tr("remove render %1").arg(object.caption()));
-      document.execute(command);
-
-      _set_current_tree_item(layer);
-    }
-    break;
-  }
-
-  case Grid:
-  case Blank:
-  case BigImage:
-  {
-    vxGraphicsObject graphics = object;
-    vxLayer layer = graphics.layer();
-    int object_ix = layer.objects().indexOf(object);
-
-    vxCommandDeleteObjects * command = new vxCommandDeleteObjects(document, object);
-    command->setText(tr("remove object %1").arg(object.caption()));
-    document.execute(command);
-
-    vxGraphics current;
-
-    if (layer.objects().count() > object_ix)
-      current = layer.objects().at(object_ix);
-    else
-    if (layer.objects().count() == object_ix && object_ix > 0)
-      current = layer.objects().at(object_ix-1);
-    else
-      current = layer;
-
-    _set_current_tree_item(current);
-
-    break;
-  }
-
-  case Layer:
-  {
-    vxLayer layer = object;
-    int layer_ix = document.layers().indexOf(layer);
-
-    vxCommandRemoveLayerFromProject * command = new vxCommandRemoveLayerFromProject(document, layer);
-    command->setText(tr("remove layer %1").arg(layer.caption()));
-    document.execute(command);
-
-    vxGraphics current;
-
-    if (document.layers().count() > layer_ix)
-      current = document.layers().at(layer_ix);
-    else
-    if (document.layers().count() == layer_ix && layer_ix > 0)
-      current = document.layers().at(layer_ix-1);
-
-    if (current.isPresent())
-      _set_current_tree_item(current);
-
-    break;
-  }
-
-  default:;
-
-  }
-
-  return need_notify;*/
+  // will come later
   return false;
 }
 
 
 void LayersForm::on_buttonRemove_clicked()
 {
-/*  bool need_notify = false;
-
-  QList<vxGraphics> selection = getSelectedObjects();
-
-  if (selection.count() == 0)
-    return;
-
-  vxDocument document = vxEnvironment::activeDocument();
-
-  if (selection.count() == 1 && document.getSelectedObjects().count() <= 1)
-  {
-    vxGraphics object = selection.first();
-    need_notify = _remove_object(object);
-  } else {
-    need_notify = _remove_objects();
-  }
-
-  if (need_notify)
-  {
-    vxEnvironment::notifySceneChanged();
-    vxEnvironment::notifyProjectChanged();
-  }*/
+  // will come later
 }
 
 
 void LayersForm::on_buttonAddMask_clicked()
 {
-/*  QList<vxGraphics> selection = getSelectedObjects();
-
-  if (selection.count() != 1)
-    return;
-
-  vxGraphics object = selection.first();
-  if (object.objectType() == BigImage)
-  {
-    object = vxBigImage(object.owner());
-  }
-
-  if (object.objectType() != Layer)
-    return;
-
-  vxLayer layer = object;
-
-  QString fileName;
-  {
-    MasksForm masks_form;
-    if (!masks_form.exec())
-      return;
-
-    fileName = masks_form.maskFileName();
-  }
-
-  vxProject * project = vxEnvironment::activeProject();
-  QString  mask_file_name;
-
-  if (!project->addBmp(fileName,  mask_file_name))
-  {
-    QMessageBox msgBox;
-    msgBox.setIcon(QMessageBox::Critical);
-    msgBox.setText("Can't open image.");
-    msgBox.setInformativeText(QString("Image data corrupted or have unsupported format."));
-    msgBox.setStandardButtons(QMessageBox::Close);
-    msgBox.setDefaultButton(QMessageBox::Close);
-    return;
-  }
-
-  vxDocument document = vxEnvironment::activeDocument();
-
-  vxImageMask image_mask(mask_file_name, 10, &document);
-
-  vxCommandAddMask * add_mask_command = new vxCommandAddMask(document, layer, image_mask);
-
-  add_mask_command->setText(tr("add mask %1").arg(QFileInfo(mask_file_name).fileName()));
-
-  document.execute(add_mask_command);
-
-  vxEnvironment::notifyProjectChanged();
-*/
+  // will come later
 }
 
 
@@ -568,21 +292,6 @@ void LayersForm::_expand_root()
   ui->treeView->expandToDepth(0);
 }
 
-/*
-void LayersForm::_update_indexes(const QModelIndex &model_index, int column)
-{
-  if (_tree_model->rowCount(model_index) > 0)
-  {
-    int n = _tree_model->rowCount(model_index);
-    for(int i=0; i < n; ++i)
-    {
-      QModelIndex child_index = model_index.child(i, column);
-      ui->treeView->update(child_index);
-      _update_indexes(child_index, column);
-    }
-  }
-}
-*/
 
 void LayersForm::on_treeView_pressed(const QModelIndex &model_index)
 {
@@ -606,143 +315,6 @@ void LayersForm::on_treeView_pressed(const QModelIndex &model_index)
   }
   default:;
   }
-/*
-  case EXPR_COLUMN:
-  {
-    bool expr_enbl = !object.isExportEnabled();
-    object.setExportEnabled(expr_enbl);
-    _update_indexes(model_index, EXPR_COLUMN);
-    vxEnvironment::notifySceneChanged();
-    break;
-  }
-
-  case VIEW_COLUMN:
-  {
-    bool visible = !object.isVisible();
-    if (visible && object.objectType() == Layer)
-    {
-      vxLayer layer = object;
-      vxDocument doc = layer.owner();
-      if (!doc.isVisible())
-      {
-        doc.setVisible(true, false);
-        for(const vxLayer &l : doc.layers())
-        {
-          l.setVisible(false, false);
-        }
-      }
-    }
-
-    if (object.objectType() == Document)
-    {
-      vxDocument doc = object;
-      bool all_visible=true;
-      bool all_invisible=true;
-      for(const vxLayer &layer : doc.layers())
-      {
-        all_visible &= layer.isVisible();
-        all_invisible &= !layer.isVisible();
-      }
-      if (visible && all_invisible)
-      {
-        for(const vxLayer &layer : doc.layers())
-        {
-          layer.setVisible(true, false);
-        }
-      } else
-      if (!visible && all_visible)
-      {
-        for(const vxLayer &layer : doc.layers())
-        {
-          layer.setVisible(false, false);
-        }
-      }
-    }
-
-    object.setVisible(visible, true);
-    if (object.objectType() == ImageMask)
-    {
-      vxImageMask mask = object;
-      mask.owner().doChanged_s();
-    }
-    _update_indexes(model_index, VIEW_COLUMN);
-    vxEnvironment::notifySceneChanged();
-    break;
-  }
-
-  case LOCK_COLUMN:
-  {
-    bool locked = !object.isLocked();
-
-    if (!locked && object.objectType() == Layer)
-    {
-      vxLayer layer = object;
-      vxDocument doc = layer.owner();
-      if (doc.isLocked())
-      {
-        doc.setLocked(false, false);
-        for(const vxLayer &l : doc.layers())
-        {
-          l.setLocked(true, false);
-        }
-      }
-    }
-
-    if (object.objectType() == Document)
-    {
-      vxDocument doc = object;
-      bool all_locked=true;
-      bool all_unlocked=true;
-      for(const vxLayer &layer : doc.layers())
-      {
-        all_locked &= layer.isLocked();
-        all_unlocked &= !layer.isLocked();
-      }
-      if (locked && all_unlocked)
-      {
-        for(const vxLayer &layer : doc.layers())
-        {
-          layer.setLocked(true, false);
-        }
-      } else
-      if (!locked && all_locked)
-      {
-        for(const vxLayer &layer : doc.layers())
-        {
-          layer.setLocked(false, false);
-        }
-      }
-    }
-
-    if (object.objectType() == Layer)
-    {
-      vxLayer layer = object;
-      for(const vxGraphicsObject &obj : layer.objects())
-      {
-        obj.setLocked(!object.isLocked(), true);
-      }
-    }
-
-    object.setLocked(!object.isLocked(), true);
-    _update_indexes(model_index, LOCK_COLUMN);
-    vxEnvironment::notifySceneChanged();
-    break;
-  }
-
-  case GROUP_COLUMN:
-  {
-    //object.setGroupEnabled(!object.isGroupEnabled());
-    //vxEnvironment::notifySceneChanged();
-    return;
-  }
-
-  default:;
-  }
-
-  ui->treeView->update(model_index);
-
-  project->updateScene();
-*/
 }
 
 
@@ -887,46 +459,20 @@ bool LayersForm::_set_current_tree_item(const QModelIndex& parent_index, const C
 
 void LayersForm::_update_model_selection()
 {
-/*  QItemSelection selection = ui->treeView->selectionModel()->selection();
-
-  QModelIndexList indexes = selection.indexes();
-
-  vxDocument document = vxEnvironment::activeDocument();
-  document.clearSelection();
-
-  foreach (QModelIndex index, indexes)
-  {
-    HypTreeItem * item = static_cast<HypTreeItem*>(index.internalPointer());
-    if (!item)
-      continue;
-
-    vxGraphics object = item->object();
-    object.setSelected(true);
-  }
-
-  disconnect(vxEnvironment::instance(), SIGNAL(selectionChanged(vxDocument)),
-             this, SLOT(_scene_selection_changed(vxDocument)));
-
-  vxEnvironment::notifySelectionChanged();
-
-  vxEnvironment::notifyProjectChanged();
-
-  connect(vxEnvironment::instance(), SIGNAL(selectionChanged(vxDocument)),
-          this, SLOT(_scene_selection_changed(vxDocument)));
-*/
+  // will come later
 }
 
 
 void LayersForm::_disable_all_actions()
-{return;
-/*  ui->buttonRemove->setEnabled(false);
+{
+  ui->buttonRemove->setEnabled(false);
   ui->buttonAddRender->setVisible(false);
   ui->buttonCombineToGrid->setVisible(false);
   ui->buttonBreakAppart->setVisible(false);
   ui->buttonAddMask->setVisible(false);
   ui->buttonNewLayer->setVisible(false);
   ui->treeView->setEnabled(false);
-  ui->refreshButton->setVisible(false);*/
+  ui->refreshButton->setVisible(false);
 }
 
 
@@ -949,18 +495,6 @@ QList<CGraphics> LayersForm::getSelectedObjects()
     if (!objects.contains(object))
       objects.append(object);
   }
-/*
-  if (objects.count() == 0)
-  {
-    vxDocument document = vxEnvironment::activeDocument();
-    QList<vxGraphicsObject> graphics = document.getSelectedObjects();
-    if (graphics.count() > 0)
-    {
-      vxGraphics object = graphics.first();
-      objects.append(object);
-    }
-  }
-*/
   return objects;
 }
 
@@ -970,7 +504,6 @@ void LayersForm::_validate_controls()
 {
   _disable_all_actions();
 
-  //ui->buttonNewLayer->setVisible(true);
   ui->treeView->setEnabled(true);
 
   QList<CGraphics> selection = getSelectedObjects();
@@ -978,97 +511,7 @@ void LayersForm::_validate_controls()
   if (selection.count() == 0)
     return;
 
- // ui->buttonRemove->setEnabled(true);
-
-  /*CGraphics object = selection.first();
-
-  bool one_selected = selection.count() == 1;
-
-  bool one_layer = true;
-  bool one_type=true;
-  int type_obj=-1;
-  foreach(const CGraphics& graphics, selection)
-  {
-    if (!vxGraphicsObject::isGraphicsObject(graphics))
-    {
-      one_layer = false;
-      break;
-    }
-
-    if (type_obj == -1)
-    {
-      type_obj = object.objectType();
-    } else {
-      if (object.objectType() != type_obj)
-      {
-        one_type = false;
-      }
-    }
-    vxGraphicsObject object = graphics;
-    if (!object.layer())
-    {
-      one_layer = false;
-      break;
-    }
-    if (!layer)
-    {
-      layer = object.layer();
-      continue;
-    }
-    if (layer != object.layer())
-    {
-      one_layer = false;
-      break;
-    }
-  }
-
-  if (object.objectType() == Layer)
-  {
-    vxLayer layer = object;
-    if (layer.allIsImages())
-    {
-      if (!layer.isBackground())
-      {
-        ui->buttonAddRender->setVisible(!layer.haveRender());
-        ui->buttonAddMask->setVisible(true);
-      }
-    }
-  }
-
-  if (one_selected)
-  {
-    if (vxGraphicsObject::isGraphicsObject(object))
-      ui->buttonCombineToGrid->setVisible(true);
-    bool owner_grid=object.owner().objectType() == Grid;
-    if (owner_grid)
-    {
-      ui->buttonCombineToGrid->setVisible(false);
-      ui->buttonRemove->setEnabled(false);
-    } else {
-      if (object.objectType() == Grid)
-      {
-        ui->buttonBreakAppart->setVisible(true);
-        vxGrid grid = object;
-        if (grid.sourceObject().objectType() == Grid)
-        {
-          ui->buttonCombineToGrid->setVisible(false);
-        }
-      }
-
-      if (object.objectType() == Blank ||
-          object.objectType() == Grid)
-      {
-        ui->refreshButton->setVisible(true);
-      }
-    }
-  } else {
-    if (one_layer && one_type)
-    {
-      //if (vxGraphicsObject::isGraphicsObject(object))
-      //  ui->buttonCombineToGrid->setVisible(true);
-      //ui->buttonRemove->setEnabled(false);
-    }
-    ui->buttonRemove->setEnabled(one_type);
+move->setEnabled(one_type);
   }*/
 
 }
@@ -1078,9 +521,9 @@ void LayersForm::_validate_controls()
 
 void LayersForm::on_treeView_customContextMenuRequested(const QPoint &)
 {
-//  QMenu menu(this);
- // vxEnvironment::requestEditMenu(&menu);
-//  menu.exec(this->mapToGlobal(pos));
+  QMenu menu(this);
+  vxEnvironment::requestEditMenu(&menu);
+  menu.exec(this->mapToGlobal(pos));
 }
 
 
@@ -1088,7 +531,7 @@ void LayersForm::on_treeView_customContextMenuRequested(const QPoint &)
 
 void LayersForm::on_refreshButton_clicked()
 {
-/*  QList<vxGraphics> selection = getSelectedObjects();
+  QList<vxGraphics> selection = getSelectedObjects();
 
   if (selection.count() != 1)
     return;
@@ -1163,7 +606,7 @@ void LayersForm::on_refreshButton_clicked()
 
   vxEnvironment::notifyActiveDocumentChanged();
 
-  vxEnvironment::notifyProjectChanged();*/
+  vxEnvironment::notifyProjectChanged();
 }
 
 

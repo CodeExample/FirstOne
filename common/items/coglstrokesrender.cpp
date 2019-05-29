@@ -167,7 +167,6 @@ void fillRequaredLines(const QRectF &rect, double angle, double interval, double
 
 }
 
-#ifdef remove_ocl
 bool OGLStrokesRenderImpl::createLinearTrack(
     cl_command_queue command_queue,
     cl_mem &mem_out_track,
@@ -213,7 +212,7 @@ bool OGLStrokesRenderImpl::createLinearTrack(
     if (global_id >= size)
       break;
   }
-/*  QTransform tx;
+  QTransform tx;
   int h = size/width;
   tx.translate(width/2, h/2);
   tx.rotate(angle);
@@ -246,10 +245,7 @@ bool OGLStrokesRenderImpl::createLinearTrack(
     }
     plgn << QPointF(x, y);
   }
-  brect = plgn.boundingRect();*/
-#ifdef RENDER_DEBUG_INFO
-  qDebug() << "      cycle:" << t.elapsed();
-#endif
+  brect = plgn.boundingRect();
 
   {
     clEvent event;
@@ -278,16 +274,12 @@ bool OGLStrokesRenderImpl::createLinearTrack(
 
     clWaitForEvents(1, &event.event);
   }
-#ifdef RENDER_DEBUG_INFO
-  qDebug() << "createLinearTrack" << t.elapsed();
-#endif
+
   return CL_SUCCESS;
 }
 
 
-#endif
 
-/*
 float OCLStrokesRenderImpl::length(const QPointF &f)
 {
   return hypot(f.x, f.y);
@@ -302,21 +294,19 @@ int OCLStrokesRenderImpl::intersect(QPointF t_pt1, QPointF t_pt2, QPointF l_pt1,
 
   const float denominator = a.y() * b.x() - a.x() * b.y();
   if (denominator == 0 || !isfinite(denominator))
-    return 0;//NoIntersection;
+    return NoIntersection;
 
   const float reciprocal = 1 / denominator;
   const float na = (b.y() * c.x() - b.x() * c.y()) * reciprocal;
-  //if (intersectionPoint)
-  //    *intersectionPoint = pt1 + a * na;
 
   if (na < 0 || na > 1)
-    return 0;//UnboundedIntersection;
+    return UnboundedIntersection;
 
   const float nb = (a.x() * c.y() - a.y() * c.x()) * reciprocal;
   if (nb < 0 || nb > 1)
-    return 0;//UnboundedIntersection;
+    return UnboundedIntersection;
 
-  return 1;//BoundedIntersection;
+  return BoundedIntersection;
 }
 
 cl_float2 mapTx(QTransform tx, cl_float2 p)
@@ -332,34 +322,6 @@ QPointF clToQ(cl_float2 p)
   return QPointF(p.x, p.y);
 }
 
-
-
-
-
-static int intersect(cl_float2 t_pt1, cl_float2 t_pt2, cl_float2 l_pt1, cl_float2 l_pt2)
-{
-    const cl_float2 a = cl_float2{{t_pt2.x - t_pt1.x, t_pt2.y - t_pt1.y}};
-    const cl_float2 b = cl_float2{{l_pt1.x - l_pt2.x, l_pt1.y - l_pt2.y}};
-    const cl_float2 c = cl_float2{{t_pt1.x - l_pt1.x, t_pt1.y - l_pt1.y}};
-
-    const float denominator = a.y * b.x - a.x * b.y;
-    if (denominator == 0 || !isfinite(denominator))
-        return 0;//NoIntersection;
-
-    const float reciprocal = 1 / denominator;
-    const float na = (b.y * c.x - b.x * c.y) * reciprocal;
-    //if (intersectionPoint)
-    //    *intersectionPoint = pt1 + a * na;
-
-    if (na < 0 || na > 1)
-        return 0;//UnboundedIntersection;
-
-    const float nb = (a.x * c.y - a.y * c.x) * reciprocal;
-    if (nb < 0 || nb > 1)
-        return 0;//UnboundedIntersection;
-
-    return 1;//BoundedIntersection;
-}
 
 void applyEdgesToStrokes(const QVector<cl_float2> &smooth_track,
                                   QVector<cl_float2> &smooth_normals,
@@ -708,7 +670,7 @@ int OGLStrokesRenderImpl::createStrokeCL(
 }
 
 
-/*
+
 int OCLStrokesRenderImpl::initKernel()
 {
   cl_int ret = clGetPlatformIDs(1, &platform_id, &ret_num_platforms);
@@ -762,7 +724,7 @@ int OCLStrokesRenderImpl::initKernel()
   }
   return CL_SUCCESS;
 }
-*/
+
 
 void OGLStrokesRenderImpl::_init_painter_data()
 {
@@ -794,13 +756,6 @@ int OGLStrokesRenderImpl::render()
   return ret;
 }
 
-int OGLStrokesRenderImpl::_render()
-{
-  return 0;
-}
-
-
-#ifdef removeocl
 int OCLStrokesRenderImpl::_render()
 {
   cl_int ret=0;
@@ -966,7 +921,7 @@ int OCLStrokesRenderImpl::_render()
   //
   // breakBasrelief
   //
-  /*{
+  {
     clKernel kernel(clCreateKernel(_ocl_program->program, "breakBasrelief", &ret));
     clSetKernelArg(kernel.kernel, 0, sizeof(cl_mem), &mem_stroke_normals.mem);
     clSetKernelArg(kernel.kernel, 1, sizeof(cl_uint), &size);
@@ -982,11 +937,11 @@ int OCLStrokesRenderImpl::_render()
                                &event.event);
     LOG_OCL_ERROR(ret, "createStroke2d failed");
     clWaitForEvents(1, &event.event);
-  }*/
+  }
   //
   // apply mask
   //
-  /*QImage mask_image;
+  QImage mask_image;
   if (!tmpl_data->_masks.isEmpty())
   {
     clMem mem_mask_transform(clCreateBuffer(_ocl_context->context, CL_MEM_READ_ONLY,
@@ -1034,7 +989,7 @@ int OCLStrokesRenderImpl::_render()
                                &event.event);
     LOG_OCL_ERROR(ret, "applyMasks failed");
     clWaitForEvents(1, &event.event);
-  }*/
+  }
 
   //
   // smoothStroke
@@ -1553,4 +1508,4 @@ void OGLStrokesRenderImpl::TIME_LOG(const QString &)
 #endif
 }
 
-}
+

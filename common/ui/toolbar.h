@@ -13,7 +13,7 @@ class ToolBar : public QWidget, private Ui::ToolBar
 public:
 
 
-  explicit ToolBar(QWidget *parent = 0);
+  explicit ToolBar(QWidget *parent = nullptr);
 
 
 

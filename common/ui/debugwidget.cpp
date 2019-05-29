@@ -18,10 +18,8 @@ DebugWidget::DebugWidget(QWidget *parent) :
   connect(smoothSlider, SIGNAL(valueChanged(int)), this, SLOT(on_valueChanged(int)));
   connect(whiteSlider, SIGNAL(valueChanged(int)), this, SLOT(on_valueChanged(int)));
   connect(blackSlider, SIGNAL(valueChanged(int)), this, SLOT(on_valueChanged(int)));
-  //roundCups->setChecked(_selected_tmpl.data()->round_cups);
   connect(interval, SIGNAL(valueChanged(int)), this, SLOT(on_valueChanged(int)));
   connect(angle, SIGNAL(valueChanged(int)), this, SLOT(on_valueChanged(int)));
-  //cells->setChecked(_selected_tmpl.data()->is_cell);
   connect(cellSize, SIGNAL(valueChanged(int)), this, SLOT(on_valueChanged(int)));
 
   _set_controls_enabled(false);
@@ -108,7 +106,6 @@ void DebugWidget::_update_tmpl_params(const CStrokesTemplate &tmpl)
   tmpl.data()->cell_size = cellSize->value()/100.;
 
   tmpl.data()->is_changed = true;
-  //qDebug() << tmpl.data()->white << tmpl.data()->black << tmpl.data()->threshold;
 
   hprj->updateItems();
 }

@@ -42,14 +42,14 @@ public:
       painter.drawEllipse(QRectF(0,0,100,100));
     }
   }
-/*
+
   void applyTransform()
   {
     _path = _transform.map(_path);
     _is_changed = true;
     setTransform(QTransform());
   }
-*/
+
   void setPath(const QPainterPath &path)
   {
     _path = path;

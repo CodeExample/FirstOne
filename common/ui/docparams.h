@@ -12,7 +12,7 @@ class DocParams : public QWidget
   Q_OBJECT
 
 public:
-  explicit DocParams(QWidget *parent = 0);
+  explicit DocParams(QWidget *parent = nullptr);
   ~DocParams();
 
   QSizeF docSize() const;

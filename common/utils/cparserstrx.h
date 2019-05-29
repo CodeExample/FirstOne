@@ -17,6 +17,7 @@ public:
 
   bool parseTo(const CGraphics&);
   CGraphics document;
+
 private:
   QString _file_name;
 };

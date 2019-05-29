@@ -111,10 +111,9 @@ void CShapeItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
 
 
-
 bool CShapeItem::_hit_to_tmpl(const QPointF &, const CacheKey &) const
 {
-  /*const CacheRec &cr = _cache_map.value(key);
+  const CacheRec &cr = _cache_map.value(key);
   if (!cr.pixmap_rect_on_item.contains(item_p))
     return false;
 
@@ -137,24 +136,9 @@ bool CShapeItem::_hit_to_tmpl(const QPointF &, const CacheKey &) const
       if (px != 0)
         return true;
     }
-  }*/
+  }
 
   return false;
-}
-
-
-/*
-void CShapeItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
-{
-  //if (!_hovered_tmpl)
-  //{
-  //  event->ignore();
-  //  return;
-  //}
-
-  _mouse_pressed = true;
-  _mouse_move = false;
-  QGraphicsObject::mousePressEvent(event);
 }
 
 
@@ -168,6 +152,7 @@ void CShapeItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
   }
   QGraphicsObject::mouseMoveEvent(event);
 }
+
 
 bool CShapeItem::mouseSceneClickEvent(QGraphicsSceneMouseEvent *event)
 {
@@ -211,7 +196,6 @@ void CShapeItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
   else
     QGraphicsObject::mouseReleaseEvent(event);
 }
-*/
 
 
 

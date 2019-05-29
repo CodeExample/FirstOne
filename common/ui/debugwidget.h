@@ -12,7 +12,7 @@ class DebugWidget : public QWidget, private Ui::DebugWidget
   Q_OBJECT
 
 public:
-  explicit DebugWidget(QWidget *parent = 0);
+  explicit DebugWidget(QWidget *parent = nullptr);
 
 private:
   CStrokesTemplate _selected_tmpl;

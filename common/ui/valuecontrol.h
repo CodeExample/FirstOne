@@ -8,7 +8,7 @@ class ValueControl : public QWidget, private Ui::ValueControl
   Q_OBJECT
 
 public:
-  explicit ValueControl(QWidget *parent = 0);
+  explicit ValueControl(QWidget *parent = nullptr);
 };
 
 #endif // VALUECONTROL_H

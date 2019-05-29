@@ -131,22 +131,9 @@ ObjectsTreeModel::ObjectsTreeModel(QObject * parent)
 {
   initStatic();
 
-//  connect(vxEnvironment::instance(), SIGNAL(projectChanged()), this, SLOT(_project_changed()));
-
   connect(hprj, SIGNAL(documentChanged(CDocument)), this, SLOT(_document_changed(CDocument)));
   connect(hprj, SIGNAL(layerActivated(CLayer)), this, SLOT(_layer_activated(CLayer)));
 }
-
-
-/*
-void ObjectsTreeModel::_project_changed()
-{
-  _update_model();
-
-  emit layoutAboutToBeChanged();
-  emit layoutChanged();
-}
-*/
 
 
 int ObjectsTreeModel::columnCount(const QModelIndex &) const
@@ -192,7 +179,7 @@ void ObjectsTreeModel::initStatic()
 
   _initialized = true;
 
-/*  _icons.insert(IconBmp, QIcon(":/images/bmp.png"));
+  _icons.insert(IconBmp, QIcon(":/images/bmp.png"));
   _icons.insert(IconTif, QIcon(":/images/tiff.png"));
   _icons.insert(IconEps, QIcon(":/images/eps.png"));
   _icons.insert(IconHyp, QIcon(":/images/hyp.png"));
@@ -221,7 +208,7 @@ void ObjectsTreeModel::initStatic()
 
   _icons.insert(IconLocked, QIcon(":/images/lock.png"));
   _icons.insert(IconUnlocked, QIcon(":/images/lock_open.png"));
-*/
+
 
   _icons.insert(IconLayer, QIcon(":/images/resources/images/tree_layer.png"));
   _icons.insert(IconDsblLayer, QIcon(":/images/resources/images/tree_layer_dsbl.png"));
@@ -235,15 +222,6 @@ QIcon ObjectsTreeModel::getIcon(const CGraphics& object, IconRole icon_role)
 {
   if (!object)
     return QIcon();
-
-  //bool locked = object.isLocked();
-
-  //bool is_ready=true;
-  //if (object.objectType() == BigImage)
-  //{
-  //  vxBigImage image = object;
-  //  is_ready = image.imageIsReady();
- // }
 
   if (icon_role == ItemIcons)
   {

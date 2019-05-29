@@ -77,7 +77,8 @@ SOURCES += \
         $$PWD/common/ui/docparams.cpp \
         $$PWD/common/ui/newprojectdlg.cpp \
         $$PWD/common/controllers/citemscontroller.cpp \
-        $$PWD/common/model/cproject.cpp
+        $$PWD/common/model/cproject.cpp \
+    common/utils/ssetests.cpp
 
 HEADERS += \
         $$PWD/mainwindow.h \
@@ -147,7 +148,8 @@ HEADERS += \
         $$PWD/common/ui/docparams.h \
         $$PWD/common/ui/newprojectdlg.h \
         $$PWD/common/controllers/citemscontroller.h \
-        $$PWD/
+        $$PWD/ \
+    common/utils/ssetests.h
 
         +common/model/cproject.h
 
@@ -163,11 +165,8 @@ FORMS += \
         $$PWD/common/ui/layersform.ui \
         $$PWD/common/ui/historyform.ui \
         $$PWD/common/ui/valuecontrol.ui \
-    common/ui/docparams.ui \
-    common/ui/newprojectdlg.ui
-
-
-
+        $$PWD/common/ui/docparams.ui \
+        $$PWD/common/ui/newprojectdlg.ui
 
 
 RESOURCES += \
@@ -186,9 +185,8 @@ INCLUDEPATH += $$PWD/common/ \
                $$PWD/graph/ \
 
 
-
+QMAKE_CXXFLAGS +=-msse4.1
 
 
 INCLUDEPATH += /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/10.0.0/include/
-QMAKE_CXXFLAGS +=-msse4.1
-#QMAKE_CXXFLAGS +=-O2
+

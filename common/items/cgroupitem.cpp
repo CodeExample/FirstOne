@@ -10,7 +10,7 @@ CGroupItem::CGroupItem(const CGroup &group) : _group(group)
 {
   setAcceptHoverEvents(true);
 
-  setFlags(ItemSendsGeometryChanges | ItemIsSelectable);// | ItemIsMovable);
+  setFlags(ItemSendsGeometryChanges | ItemIsSelectable | ItemIsMovable);
 
   setSelected(group.isSelected());
 

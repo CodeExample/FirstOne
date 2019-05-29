@@ -14,7 +14,6 @@ struct COGLRenderThreadTask
 {
   StrokesTemplateData * tmpl_data;
   COGLPainterDataSharedPtr painter_data;
-  //QList<KnifeRec> knives_recs;
 };
 
 class COGLRenderThread : public QThread

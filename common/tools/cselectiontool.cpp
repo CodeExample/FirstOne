@@ -13,7 +13,7 @@ void CSelectionTool::toolActivated()
 
 bool CSelectionTool::frameAction(const QRectF &, QGraphicsSceneMouseEvent * )
 {
-/*  if (~event->modifiers() & Qt::ShiftModifier)
+  if (~event->modifiers() & Qt::ShiftModifier)
   {
     vxDocument document = vxEnvironment::activeDocument();
     document.unselectAll();
@@ -25,14 +25,14 @@ bool CSelectionTool::frameAction(const QRectF &, QGraphicsSceneMouseEvent * )
   } else {
     _select_intersect_frame(scene_rect, event->modifiers() & Qt::ShiftModifier);
   }
-*/
+
   return true;
 }
 
 
 void CSelectionTool::_select_in_frame(const QRectF &, bool)
 {
-/*  vxDocument document = vxEnvironment::activeDocument();
+  vxDocument document = vxEnvironment::activeDocument();
 
   QList<vxGraphicsObject> objects = document.getObjects();
 
@@ -68,13 +68,13 @@ void CSelectionTool::_select_in_frame(const QRectF &, bool)
   document.selectGroups(to_select_groups);
   document.unselectGroups(to_unselect_groups);
 
-  vxEnvironment::notifySelectionChanged();*/
+  vxEnvironment::notifySelectionChanged();
 }
 
 
 void CSelectionTool::_select_intersect_frame(const QRectF &, bool)
 {
-/*  vxDocument document = vxEnvironment::activeDocument();
+  vxDocument document = vxEnvironment::activeDocument();
 
   QList<vxGraphicsObject> objects = document.getObjects();
 
@@ -114,13 +114,13 @@ void CSelectionTool::_select_intersect_frame(const QRectF &, bool)
   document.selectGroups(to_select_groups);
   document.unselectGroups(to_unselect_groups);
 
-  vxEnvironment::notifySelectionChanged();*/
+  vxEnvironment::notifySelectionChanged();
 }
 
 
 bool CSelectionTool::clickAction(QGraphicsSceneMouseEvent *)
 {
-/*  vxProject * project = vxEnvironment::activeProject();
+  vxProject * project = vxEnvironment::activeProject();
 
   if (!project)
     return false;
@@ -157,6 +157,7 @@ bool CSelectionTool::clickAction(QGraphicsSceneMouseEvent *)
 
   bool was_selected = false;
   vxGraphicsObject hit_object;
+
   for(vxGraphicsObject object : objects)
   {
     if (object.isLocked() || !object.isVisible())
@@ -194,7 +195,7 @@ bool CSelectionTool::clickAction(QGraphicsSceneMouseEvent *)
   document.unselectGroups(to_unselect_groups);
 
   vxEnvironment::notifySelectionChanged();
-*/
+
   return true;
 }
 

@@ -6,7 +6,8 @@ bool StrokesTemplateImpl::iterate(IVisitor * v)
 {
   return v->visitTo(this);
 }
-/*
+
+
 void StrokesTemplateImpl::addMask(const QString &mask_name)
 {
   if (!masks.contains(mask_name))
@@ -15,8 +16,6 @@ void StrokesTemplateImpl::addMask(const QString &mask_name)
     ++data_version;
   }
 }
-*/
-
 
 
 QPointF StrokesTemplateImpl::tangent(const QPointF&) const

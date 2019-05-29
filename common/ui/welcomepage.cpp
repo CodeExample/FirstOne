@@ -12,11 +12,6 @@ WelcomePage::WelcomePage(QWidget *parent) :
   QFrame(parent), _moved(false)
 {
   setupUi(this);
-  /*setAcceptDrops(false);
-  setMouseTracking(true);
-
-  label->installEventFilter(this);
-  label_2->installEventFilter(this);*/
 }
 
 
@@ -52,13 +47,13 @@ bool WelcomePage::eventFilter(QObject *, QEvent *e)
 
 void WelcomePage::on_label_linkActivated(const QString &)
 {
- // vEnvironment::requestActionWizard(true);
+  vEnvironment::requestActionWizard(true);
 }
 
 
 void WelcomePage::on_label_2_linkActivated(const QString &)
 {
-  //vEnvironment::requestActionWizard(true);
+  vEnvironment::requestActionWizard(true);
 }
 
 

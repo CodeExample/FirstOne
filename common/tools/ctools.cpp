@@ -161,13 +161,13 @@ bool CAbstractTool::eventFilter(QObject * object, QEvent * event)
     break;
   }
 
-  //case QEvent::MouseButtonDblClick:
-  //{
-    //QMouseEvent * me = static_cast<QMouseEvent*>(event);
-    //_can_accept_click = false;
-    //accepted = mouseDblClick(me);
-  //  break;
- // }
+  case QEvent::MouseButtonDblClick:
+  {
+    QMouseEvent * me = static_cast<QMouseEvent*>(event);
+    _can_accept_click = false;
+    accepted = mouseDblClick(me);
+    break;
+  }
 
   case QEvent::KeyPress:
   {

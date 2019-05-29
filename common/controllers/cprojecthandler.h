@@ -17,7 +17,6 @@ class CTransformControl;
 namespace sm
 {
 
-
 enum Actions
 {
   ActionSelector,
@@ -247,7 +246,6 @@ private:
 
   QMap<int, QAction*> _actions_map;
 
-//  QGraphicsItem * _image_item=nullptr;
   QImage _source_image;
   bool _need_update_scene_after_edges_finished=false;
 
@@ -310,10 +308,6 @@ private slots:
   void _on_transform_triggered(bool);
   void _on_apply_transform_triggered(bool);
 
-  //void _item_transform_started(const QList<QGraphicsItem*>&);
-  //void _item_transform_finished(const QString&, const QList<QGraphicsItem*>&);
-  //void _transform_started(const QList<CGraphics>&);
-  //void _transform_finished(const QString&);
   void _order_z_items(const CLayer &root);
 
   void _current_metric_changed(vxMetrics);

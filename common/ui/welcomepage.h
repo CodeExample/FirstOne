@@ -10,7 +10,7 @@ class WelcomePage : public QFrame, private Ui::WelcomePage
   Q_OBJECT
 
 public:
-  explicit WelcomePage(QWidget *parent = 0);
+  explicit WelcomePage(QWidget *parent = nullptr);
 
   bool eventFilter(QObject *, QEvent *);
   void dropEvent(QDropEvent * drop_event);

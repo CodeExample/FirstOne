@@ -23,7 +23,7 @@ class WorkspaceWidget :
   Q_OBJECT
 
 public:
-  explicit WorkspaceWidget(QWidget *parent = 0);
+  explicit WorkspaceWidget(QWidget *parent = nullptr);
   ~WorkspaceWidget();
 
   void init(QGraphicsScene *);

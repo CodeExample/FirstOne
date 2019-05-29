@@ -8,7 +8,7 @@ class HistoryForm : public QWidget, private Ui::HistoryForm
   Q_OBJECT
 
 public:
-  explicit HistoryForm(QWidget *parent = 0);
+  explicit HistoryForm(QWidget *parent = nullptr);
 
 };
 

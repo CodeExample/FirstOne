@@ -17,7 +17,7 @@ class NewProjectDlg : public QDialog
   Q_OBJECT
 
 public:
-  explicit NewProjectDlg(QWidget *parent = 0);
+  explicit NewProjectDlg(QWidget *parent = nullptr);
   ~NewProjectDlg();
 
   QSizeF docSize() const;

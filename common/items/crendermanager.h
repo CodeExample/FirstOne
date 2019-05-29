@@ -76,7 +76,7 @@ signals:
 
   void painterReady(int, const PainterThreadTask &task);
 
-  //void knifeEdgesCreated(int tmpl_id, StrokesTemplateData*);
+  void knifeEdgesCreated(int tmpl_id, StrokesTemplateData*);
 
 };
 

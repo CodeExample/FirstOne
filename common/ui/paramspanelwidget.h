@@ -12,7 +12,7 @@ class ParamsPanelWidget : public QWidget
   Q_OBJECT
 
 public:
-  explicit ParamsPanelWidget(QWidget *parent = 0);
+  explicit ParamsPanelWidget(QWidget *parent = nullptr);
 
 
 protected:

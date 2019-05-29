@@ -232,7 +232,7 @@ bool CSceneTool::clickAction(QGraphicsSceneMouseEvent * event)
     if (item->type() == ShapeItem)
     {
       CShapeItem * shape_item = static_cast<CShapeItem*>(item);
-  //    accepted |= shape_item->mouseSceneClickEvent(event);
+      accepted |= shape_item->mouseSceneClickEvent(event);
     }
   }
 

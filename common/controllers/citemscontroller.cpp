@@ -105,7 +105,7 @@ QGraphicsItem * CItemsController::_create_object_item(const CGraphics &object)
     connect(static_cast<CShapeItem*>(item), SIGNAL(transformFinished(QString)),
             this, SLOT(_transform_finished(const QString&)));
 
-    //static_cast<CShapeItem*>(item)->startStrokesRender();
+    static_cast<CShapeItem*>(item)->startStrokesRender();
     break;
 
   default:;

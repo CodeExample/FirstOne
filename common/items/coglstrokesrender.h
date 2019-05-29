@@ -20,15 +20,6 @@ class QOffscreenSurface;
 
 namespace sm
 {
-/*
-struct KnifeRec
-{
-  QVector<QPointF> above_edges;
-  QVector<uint> above_indexes;
-  QImage edges_map;
-  QPointF edges_map_tl;
-};
-*/
 
 
 class StrokesTemplateImpl;
@@ -76,8 +67,6 @@ public:
 
   QImage _image;
 
-
-
   QOpenGLContext *_ogl_context=nullptr;
   QTime _time;
 
@@ -85,7 +74,7 @@ public:
   QRectF rect;
   QOffscreenSurface * _offscrnsf=nullptr;
 
-/*
+
   int initKernel();
 
   bool createLinearTrack(
@@ -122,6 +111,7 @@ public:
                   const QPointF &tl,
                   QVector<cl_uint8> &cells);
 
+
   int applyCells(clContext *context,
                  clCommandQueue *_ocl_command_queue,
                  size_t local_size,
@@ -133,8 +123,12 @@ public:
 
   int transformToMem(cl_command_queue _ocl_command_queue, const QTransform &tx, cl_mem &mem_tx);
 
-  QList<KnifeRec> knives;
 
+  int createStrokeCL(const QTransform &in_to_scene_tx,
+                     const QRectF &in_rect,
+                     const QList<KnifeRec> &knives);
+
+  QList<KnifeRec> knives;
 
   cl_platform_id platform_id = NULL;
   cl_device_id device_id = NULL;
@@ -148,12 +142,6 @@ public:
   clCommandQueue * _ocl_command_queue=nullptr;
   clProgram * _ocl_program=nullptr;
 
-
-
-  int createStrokeCL(const QTransform &in_to_scene_tx,
-                     const QRectF &in_rect,
-                     const QList<KnifeRec> &knives);
-*/
 };
 
 
@@ -167,19 +155,21 @@ public:
   COGLStrokesRender(bool) : CObject(new OGLStrokesRenderImpl()){}
 
 
-/*  inline int createStrokeCL(const QTransform &in_to_scene_tx,
+  inline int createStrokeCL(const QTransform &in_to_scene_tx,
                      const QRectF &in_rect,
                      const QList<KnifeRec> &knifes) const
   {
     IMPL_D(OCLStrokesRender);
     return d->createStrokeCL(in_to_scene_tx, in_rect, knifes);
   }
-*/
+
+
   inline int createStrokeCL(const QRectF &in_rect) const
   {
     IMPL_D(OGLStrokesRender);
     return d->createStrokeCL(QTransform(), in_rect);
   }
+
 
   inline int createStrokeCL(const QTransform &in_to_scene_tx,
                      const QRectF &in_rect) const
@@ -187,6 +177,7 @@ public:
     IMPL_D(OGLStrokesRender);
     return d->createStrokeCL(in_to_scene_tx, in_rect);
   }
+
 
   inline int render() const
   {
@@ -200,19 +191,21 @@ public:
     IMPL_D(OGLStrokesRender);
     return d->initContext(ctx);
   }
-/*
+
+
   inline bool initKernel() const
   {
     IMPL_D(OCLStrokesRender);
     return d->initKernel();
   }
-*/
+
 
   inline QOpenGLContext * oglContext() const
   {
     IMPL_D(OGLStrokesRender);
     return d->_ogl_context;
   }
+
 
   inline COGLPainterDataSharedPtr painterData() const
   {
@@ -234,11 +227,13 @@ public:
     d->_tmpl_data = tmpl_data;
   }
 
+
   inline void setPainterData(COGLPainterData * painter_data) const
   {
     IMPL_D(OGLStrokesRender);
     d->_painter_data = painter_data;
   }
+
 
   inline StrokesTemplateData &tmplData() const
   {

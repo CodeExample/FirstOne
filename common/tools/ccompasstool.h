@@ -11,7 +11,7 @@ class CCompassTool : public CAbstractTool
 {
   Q_OBJECT
 public:
-    CCompassTool(QWidget * =0);
+    CCompassTool(QWidget * =nullptr);
     ~CCompassTool();
 
     int toolType() const override

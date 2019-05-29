@@ -16,7 +16,7 @@ CShapeTool::CShapeTool(ShapeType shape_type, QWidget * parent) : CFrameTool(pare
 
 bool CShapeTool::frameAction(const QRectF &, QGraphicsSceneMouseEvent *)
 {
-/*  CEngravingItem * rect_item = static_cast<CEngravingItem*>(_rect_item);
+  CEngravingItem * rect_item = static_cast<CEngravingItem*>(_rect_item);
   CStrokesTemplate tmpl = rect_item->tmpl();
 
   hprj->assignItemToObject(_rect_item, tmpl);
@@ -31,7 +31,7 @@ bool CShapeTool::frameAction(const QRectF &, QGraphicsSceneMouseEvent *)
   hprj->execute(comm);
 
   hprj->select(tmpl);
-*/
+
   return true;
 }
 
@@ -50,13 +50,12 @@ void CShapeTool::toolActivated()
 
 void CShapeTool::updateRectItem(const QRectF &)
 {
-/*  CEngravingItem * rect_item = static_cast<CEngravingItem*>(_rect_item);
+  CEngravingItem * rect_item = static_cast<CEngravingItem*>(_rect_item);
 
   CStrokesTemplate tmpl = rect_item->tmpl();
   tmpl.data()->bounding_rect = tmpl.data()->create_rect = rect.normalized();
   tmpl.data()->is_changed = true;
-  */
-/*
+
   switch(_shape_type)
   {
   case Rectangle:
@@ -71,35 +70,35 @@ void CShapeTool::updateRectItem(const QRectF &)
     tmpl.data()->mask.setPath(path);
     break;
   }
-  rect_item->startStrokesRender();*/
+  rect_item->startStrokesRender();
 }
 
 
 void CShapeTool::deleteFrameItem()
 {
-  /*if (_rect_item)
+  if (_rect_item)
   {
     CEngravingItem * engr_item = static_cast<CEngravingItem*>(_rect_item);
     engr_item->releaseItem();
     delete engr_item;
     _rect_item = nullptr;
-  }*/
+  }
 }
 
 
 QGraphicsItem * CShapeTool::createFrameItem(const QRectF &)
 {
-  /*CStrokesTemplate tmpl = createTmpl(rect);
+  CStrokesTemplate tmpl = createTmpl(rect);
   CEngravingItem * engr_item = new CEngravingItem(tmpl);
   engr_item->setSelected(true);*/
-  return nullptr;//engr_item;
+  return engr_item;
 }
 
 
 CGraphics CShapeTool::createTmpl(const QRectF &rect)
 {
   CStrokesTemplate tmpl = CStrokesTemplate::createInstance();
-  //tmpl.data()->image = hprj->sourceImage();
+  tmpl.data()->image = hprj->sourceImage();
   tmpl.data()->bounding_rect = tmpl.data()->create_rect = rect;
   tmpl.data()->angle = 45;
   tmpl.data()->round_cups = true;
@@ -118,11 +117,11 @@ CGraphics CShapeTool::createTmpl(const QRectF &rect)
     break;
 
   case Ellipse:
-    //QPainterPath path;
-    //path.addEllipse(rect.normalized());
-    //CMask mask(path);
-    //hprj->addMask("__ellipse_mask", mask);
-    //tmpl.addMask("__ellipse_mask");
+    QPainterPath path;
+    path.addEllipse(rect.normalized());
+    CMask mask(path);
+    hprj->addMask("__ellipse_mask", mask);
+    tmpl.addMask("__ellipse_mask");
     break;
   }
   return tmpl;

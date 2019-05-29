@@ -9,7 +9,7 @@ namespace  sm {
 class CHandTool : public CAbstractTool
 {
 public:
-    CHandTool(QWidget * =0);
+    CHandTool(QWidget * =nullptr);
     ~CHandTool();
 
     int toolType() const override

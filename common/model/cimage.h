@@ -6,7 +6,6 @@
 namespace  sm
 {
 
-
 class CImage : public CGraphics
 {
 public:

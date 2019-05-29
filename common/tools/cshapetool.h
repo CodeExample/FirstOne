@@ -16,7 +16,7 @@ public:
     Ellipse
   };
 
-  CShapeTool(ShapeType, QWidget * =0);
+  CShapeTool(ShapeType, QWidget * =nullptr);
 
   int toolType() const override
   {
