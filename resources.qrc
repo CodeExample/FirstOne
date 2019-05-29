@@ -1,0 +1,56 @@
+<RCC>
+    <qresource prefix="/examples">
+        <file>resources/examples/nifertiti_m.jpg</file>
+    </qresource>
+    <qresource prefix="/"/>
+    <qresource prefix="/images">
+        <file>resources/images/cr_compass.png</file>
+        <file>resources/images/cr_compass@2x.png</file>
+        <file>resources/images/bt_pen_tool@2x.png</file>
+        <file>resources/images/bt_tool_direct_selection.png</file>
+        <file>resources/images/bt_tool_direct_selection@2x.png</file>
+        <file>resources/images/bt_pen_tool.png</file>
+        <file>resources/images/bt_show_image.png</file>
+        <file>resources/images/bt_show_image@2x.png</file>
+        <file>resources/images/bt_add_circle_tool.png</file>
+        <file>resources/images/bt_add_circle_tool@2x.png</file>
+        <file>resources/images/bt_add_rectangle_tool.png</file>
+        <file>resources/images/bt_add_rectangle_tool@2x.png</file>
+        <file>resources/images/tree_layer_active.png</file>
+        <file>resources/images/tree_layer_dsbl.png</file>
+        <file>resources/images/tree_layer.png</file>
+        <file>resources/images/bt_angle_tool@2x.png</file>
+        <file>resources/images/bt_angle_tool.png</file>
+        <file>resources/images/bt_interval_tool@2x.png</file>
+        <file>resources/images/bt_interval_tool.png</file>
+        <file>resources/images/bt_thickness_tool.png</file>
+        <file>resources/images/bt_thickness_tool@2x.png</file>
+        <file>resources/images/bt_basrelief_tool.png</file>
+        <file>resources/images/bt_basrelief_tool@2x.png</file>
+        <file>resources/images/bt_threshold_tool.png</file>
+        <file>resources/images/bt_threshold_tool@2x.png</file>
+        <file>resources/images/bt_dotted_line_tool.png</file>
+        <file>resources/images/bt_dotted_line_tool@2x.png</file>
+        <file>resources/images/bt_smooth_tool.png</file>
+        <file>resources/images/bt_smooth_tool@2x.png</file>
+        <file>resources/images/bt_lasso_tool.png</file>
+        <file>resources/images/bt_lasso_tool@2x.png</file>
+    </qresource>
+    <qresource prefix="/cursors">
+        <file>resources/cursors/shear.png</file>
+        <file>resources/cursors/arrow_circle_045_left.png</file>
+        <file>resources/cursors/arrow_move.png</file>
+        <file>resources/cursors/arrow_resize_045.png</file>
+        <file>resources/cursors/arrow_resize_090.png</file>
+        <file>resources/cursors/arrow_resize_135.png</file>
+        <file>resources/cursors/arrow_resize.png</file>
+        <file>resources/cursors/arrow_rotate_bottom_left.png</file>
+        <file>resources/cursors/arrow_rotate_bottom_right.png</file>
+        <file>resources/cursors/arrow_rotate_bottom.png</file>
+        <file>resources/cursors/arrow_rotate_left.png</file>
+        <file>resources/cursors/arrow_rotate_right.png</file>
+        <file>resources/cursors/arrow_rotate_top_left.png</file>
+        <file>resources/cursors/arrow_rotate_top_right.png</file>
+        <file>resources/cursors/arrow_rotate_top.png</file>
+    </qresource>
+</RCC>

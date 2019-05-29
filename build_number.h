@@ -1,0 +1,4 @@
+#ifndef BUILD_NUMBER_STR
+#define BUILD_NUMBER_STR "25092018"
+#endif
+

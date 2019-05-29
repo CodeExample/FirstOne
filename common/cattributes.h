@@ -1,0 +1,46 @@
+#ifndef CATTRIBUTES_H
+#define CATTRIBUTES_H
+
+#define EXT_STRX                      "strx"
+#define ATTR_PROJECTS_PATH            "projects_path"
+#define ATTR_SOURCE_IMAGE_PATH        "source_image_path"
+
+#define TAG_LR_SECTION       "LrSection"
+#define TAG_FREE_MESH        "FreeMesh"
+#define TAG_TMPL_FREE        "FreeCurveStrokesTmpl"
+#define TAG_TMPL_LINEAR      "LinearStrokesTmpl"
+#define TAG_VECTOR_MASK      "VectorMask"
+#define TAG_CURVE            "Curve"
+#define TAG_curve            "curve"
+#define TAG_NODES            "Nodes"
+#define TAG_DOCUMENT         "Document"
+#define TAG_IMAGE_DATA       "ImageData"
+#define TAG_BIG_PICT         "BigPict"
+#define TAG_IMAGES           "Images"
+#define TAG_OBJECTS          "Objects"
+#define TAG_PROJECT          "Project"
+#define TAG_IMAGES           "Images"
+#define TAG_SOURCE_PICT      "SourcePict"
+#define TAG_TRANSFORM        "Transform"
+
+#define ATTR_NODES_COUNT     "nodes_cnt"
+#define ATTR_CLOSED          "closed"
+#define ATTR_WIDTH           "width"
+#define ATTR_HEIGHT          "height"
+#define ATTR_WIDTH_MM        "width_mm"
+#define ATTR_HEIGHT_MM       "height_mm"
+#define ATTR_DPI             "dpi"
+#define ATTR_CAPTION         "caption"
+#define ATTR_PATH            "path"
+#define ATTR_ELEMENT         "element"
+#define ATTR_X               "x"
+#define ATTR_Y               "y"
+#define ATTR_TYPE            "type"
+#define ATTR_ELEMENTS        "elements"
+#define ATTR_NAME            "name"
+#define ATTR_VISIBLE         "visible"
+#define ATTR_LOCKED          "locked"
+#define ATTR_TRANSFORM       "transform"
+
+
+#endif // CATTRIBUTES_H
